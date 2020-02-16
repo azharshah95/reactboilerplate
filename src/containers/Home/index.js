@@ -10,6 +10,8 @@ class Home extends Component {
           This is Home page.
         </h2>
         <Link to='/posts'>Posts</Link>
+        <br />
+        <Link to='/login'>Login</Link>
       </div>
     );
   }
