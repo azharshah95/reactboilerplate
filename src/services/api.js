@@ -1,5 +1,6 @@
 import apisauce from 'apisauce';
 import * as KEY from '../config/keys';
+import Cookies from 'js-cookie';
 
 const create = () => {
 
@@ -7,12 +8,26 @@ const create = () => {
     baseURL: KEY.localBaseUrl
   });
 
+  console.log(Cookies.get('token'));
+
+  const getHeaders = () => {
+    let token = Cookies.get('token');
+    if (token) {
+      return (token);
+    }
+  }
+  
   const getPosts = () => api.get('https://jsonplaceholder.typicode.com/posts');
   const registerUser = (bodyParams) => api.post('/users/register', bodyParams);
+  const loginUser = (bodyParams) => api.post('/users/login', bodyParams);
+  // const loginCurrentUser = () => api.get('/users/current', { headers: getHeaders() });
+  const loginCurrentUser = () => api.get('/users/current', {},{ headers: {Authorization: getHeaders()} });
 
   return {
     getPosts,
-    registerUser
+    registerUser,
+    loginUser,
+    loginCurrentUser
   }
 };
 
