@@ -29,6 +29,7 @@ function appReducer(state = initialState, action) {
     case CONSTANTS.REGISTER_REQUEST_SUCCESS:
       return state
         .set('registerUserData', action.payload)
+        .set('error', false)
         .set('loading', false);
     case CONSTANTS.REGISTER_REQUEST_FAIL:
       return state

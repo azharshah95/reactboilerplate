@@ -38,7 +38,7 @@ class Register extends Component {
   }
 
   render(){
-    const { loading, registerUserData } = this.props;
+    const { error, loading, registerUserData } = this.props;
     if (loading) {
       return(
         <h3>Registering...</h3>
@@ -55,37 +55,50 @@ class Register extends Component {
           Register Below
         </h2>
         <form>
-          <label htmlFor="name">Name: </label>
+          <p style={{color: "red"}}>
+            { error ? error.data.name : null }
+          </p>
+          <label htmlFor="name">Name*: </label>
           <input
               id="name"
               type="name"
               name="name"
+              value={this.state.name}
+              placeholder="example"
               onChange={this.onChange}
           />
           <br />
-          <br />
-          <label htmlFor="email_register">Email Address: </label>
+          <p style={{color: "red"}}>
+            { error ? error.data.email : null }
+          </p>
+          <label htmlFor="email_register">Email Address*: </label>
           <input
               id="email_register"
-              type="email_register"
+              type="email"
               name="email_register"
+              value={this.state.email_register}
+              placeholder="you@example.com"
               onChange={this.onChange}
           />
           <br />
-          <br />
-          <label htmlFor="password_register">Password: </label>
+          <p style={{color: "red"}}>
+            { error ? error.data.password : null }
+          </p>
+          <label htmlFor="password_register">Password*: </label>
           <input
               id="password_register"
-              type="password_register"
+              type="password"
               name="password_register"
               onChange={this.onChange}
           />
           <br />
-          <br />
-          <label htmlFor="password2">Retype Password: </label>
+          <p style={{color: "red"}}>
+            { error ? error.data.password2 : null }
+          </p>
+          <label htmlFor="password2">Retype Password*: </label>
           <input
               id="password2"
-              type="password2"
+              type="password"
               name="password2"
               onChange={this.onChange}
           />
