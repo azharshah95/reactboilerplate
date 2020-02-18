@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -17,11 +16,17 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      user: ''
     };
   }
 
-  comp
+  UNSAFE_componentWillMount() {
+    const user = localStorage.getItem('user');
+    if(user){
+      this.setState({ user });
+    }
+  }
 
   onChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
@@ -32,36 +37,37 @@ class Login extends Component {
     this.props.loginUser(this.state)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if (nextProps.loginUserData.success) {
-      document.cookie = `token=${nextProps.loginUserData.token}`;
-      this.props.currentUser()
-      // this.props.currentUser()
+  componentDidUpdate(prevProps) {
+    if (this.props.loginUserData.success) {
+      this.setCookie();
+    }
+    if (this.props.loginCurrentUser.size !== 0) {
+      this.setLocalStorage();
+    }
+    if (this.props.loginUserData !== prevProps.loginUserData) {
+      this.getCurrentUser();
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log('PREV PROPS', prevProps);
-  //   console.log('PROPS', this.props);
-  //   if (this.props.loginCurrentUser == prevProps.loginCurrentUser) {
-  //   //   console.log(true);
-      
-  //     this.props.currentUser()
-  //   }
-  // }
+  setLocalStorage = () => {
+    localStorage.setItem('user', JSON.stringify(this.props.loginCurrentUser));
+  }
+
+  setCookie = () => {
+    document.cookie = `token=${this.props.loginUserData.token}`;
+  }
+
+  getCurrentUser = () => {
+    this.props.currentUser();
+  }
 
   render(){
-    // if (Cookies.get('token')) {
-    //   return(
-    //     <Redirect
-    //       to='/'
-    //     />
-    //   )
-    // }
-    // console.log(this.props);
-    
-    const { error, loading, loginUserData } = this.props;
+    const { error, loading, loginUserData, loginCurrentUser } = this.props;
+    if (loginCurrentUser.name || localStorage.getItem('user')) {
+      return(
+        <Redirect to='/' />
+      )
+    }
     if (loading) {
       return(
         <h3>Logging in ...</h3>
@@ -71,11 +77,6 @@ class Login extends Component {
       return(
         <h3>Login Successful</h3>
       )
-      // return(
-      //   <Redirect
-      //     to='/'
-      //   />
-      // )
     }
     return(
       <div>
@@ -86,7 +87,7 @@ class Login extends Component {
           {
             error ? <p style={{color:'red'}}>{error.data.email}</p> : null
           }
-          <label htmlFor="email_login">Email Address: </label>
+          <label htmlFor="email">Email Address: </label>
           <input
               id="email_login"
               type="email"
@@ -100,7 +101,7 @@ class Login extends Component {
           {
             error ? <p style={{color:'red'}}>{error.data.password}</p> : null
           }
-          <label htmlFor="password_login">Password: </label>
+          <label htmlFor="password">Password: </label>
           <input
               id="password_login"
               type="password"
