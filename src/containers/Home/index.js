@@ -6,6 +6,7 @@ class Home extends Component {
   onLogout = () => {
     localStorage.removeItem('user');  // remove user
     document.cookie = `token=null`  // delete token
+    window.location.reload();
   }
 
   render(){

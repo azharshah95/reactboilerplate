@@ -64,9 +64,10 @@ class Login extends Component {
   render(){
     const { error, loading, loginUserData, loginCurrentUser } = this.props;
     if (loginCurrentUser.name || localStorage.getItem('user')) {
-      return(
-        <Redirect to='/' />
-      )
+      // return(
+      //   <Redirect to='/' />
+      // )
+      window.location.replace('/')
     }
     if (loading) {
       return(

@@ -8,7 +8,7 @@ const create = () => {
     baseURL: KEY.localBaseUrl
   });
 
-  console.log(Cookies.get('token'));
+  // console.log(Cookies.get('token'));
 
   const getHeaders = () => {
     let token = Cookies.get('token');
