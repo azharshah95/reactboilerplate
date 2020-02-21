@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -64,9 +63,6 @@ class Login extends Component {
   render(){
     const { error, loading, loginUserData, loginCurrentUser } = this.props;
     if (loginCurrentUser.name || localStorage.getItem('user')) {
-      // return(
-      //   <Redirect to='/' />
-      // )
       window.location.replace('/')
     }
     if (loading) {

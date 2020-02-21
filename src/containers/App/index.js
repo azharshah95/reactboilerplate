@@ -4,7 +4,6 @@ import Auth from '../Auth';
 import Posts from '../Posts';
 import Home from '../Home';
 import NavBar from '../../components/NavBar';
-import UserLogo from '../../components/UserLogo';
 import UserContext from '../../context/userContext';
 
 class App extends Component {
@@ -12,28 +11,17 @@ class App extends Component {
     appUser: {}
   }
 
-  // UNSAFE_componentWillMount(){
-  //   console.log(localStorage.getItem('user'));
-  //   const appUser = JSON.parse(localStorage.getItem('user'));
-  //   this.setState({ appUser })
-  // }
-
   componentDidMount(){
-    console.log(localStorage.getItem('user'));
     const appUser = JSON.parse(localStorage.getItem('user'));
     this.setState({ appUser })
   }
-  // componentWillMount(){
-  //   console.log(localStorage);
-  // }
   
   render(){  
     return (
       <UserContext.Provider value={this.state.appUser}>
         <div>
-          {/* <NavBar/> */}
-          <UserLogo/>
           <Router>
+            <NavBar/>
             <Switch>
               <Route exact path='/login' component={Auth} />
               <Route exact path='/posts' component={Posts} />
