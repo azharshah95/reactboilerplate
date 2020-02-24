@@ -6,9 +6,11 @@ import history from './utils/history';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './configureStore';
+import 'semantic-ui-css/semantic.min.css'
 
 const initialState = {};
 const store = configureStore(initialState, history);
+
 
 ReactDOM.render(
   <Provider store={store}>

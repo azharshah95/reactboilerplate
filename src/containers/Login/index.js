@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { Input, Button, Form, Header, Message } from 'semantic-ui-react'
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import saga from './saga';
@@ -65,51 +66,53 @@ class Login extends Component {
     if (loginCurrentUser.name || localStorage.getItem('user')) {
       window.location.replace('/')
     }
-    if (loading) {
-      return(
-        <h3>Logging in ...</h3>
-      )
-    }
     if (loginUserData.success) {
       return(
-        <h3>Login Successful</h3>
+        <Form success>
+          <Message
+            success
+            header='Login Successful'
+          />
+        </Form>
       )
     }
     return(
       <div>
-        <h2>
+        <Header>
           Login Below
-        </h2>
-        <form>
+        </Header>
+        <Form error>
           {
-            error ? <p style={{color:'red'}}>{error.data.email}</p> : null
+            error ? <Message error content={error.data.email} /> : null
           }
-          <label htmlFor="email">Email Address: </label>
-          <input
-              id="email_login"
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              value={this.state.email}
-              onChange={this.onChange}
-          />
-          <br />
-          <br />
+          <Form.Field>
+            <label htmlFor="email">Email Address: </label>
+            <Input
+                id="email_login"
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                value={this.state.email}
+                onChange={this.onChange}
+                />
+          </Form.Field>
           {
-            error ? <p style={{color:'red'}}>{error.data.password}</p> : null
+            error ? <Message error content={error.data.password} /> : null
           }
-          <label htmlFor="password">Password: </label>
-          <input
-              id="password_login"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChange}
-          />
-          <br />
-          <br />
-          <button id="btn_login" onClick={this.onSubmitForm}>Login</button>
-        </form>
+          <Form.Field>
+            <label htmlFor="password">Password: </label>
+            <Input
+                id="password_login"
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                />
+          </Form.Field>
+          {
+            loading ? <Button loading fluid>Login</Button> : <Button id="btn_login" onClick={this.onSubmitForm} fluid>Login</Button>
+          }
+        </Form>
       </div>
     );
   }

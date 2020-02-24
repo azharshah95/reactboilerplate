@@ -6,7 +6,7 @@ class Auth extends Component {
 
   render(){
     return(
-      <div>
+      <div style={{marginTop: '50px'}}>
         <Login />
         <hr />
         <Register />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Container } from 'semantic-ui-react'
 import Auth from '../Auth';
 import Posts from '../Posts';
 import Home from '../Home';
@@ -19,17 +20,19 @@ class App extends Component {
   render(){  
     return (
       <UserContext.Provider value={this.state.appUser}>
-        <div>
-          <Router>
-            <NavBar/>
-            <Switch>
-              <Route exact path='/login' component={Auth} />
-              <Route exact path='/posts' component={Posts} />
-              <Route exact path='/' component={Home} />
-            </Switch>
-          </Router>
-        </div>
-      </UserContext.Provider>
+          <div>
+            <Router>
+              <NavBar/>
+              <Container>
+                <Switch>
+                  <Route exact path='/login' component={Auth} />
+                  <Route exact path='/posts' component={Posts} />
+                  <Route exact path='/' component={Home} />
+                </Switch>
+              </Container>
+            </Router>
+          </div>
+        </UserContext.Provider>
     );
   }
 }
