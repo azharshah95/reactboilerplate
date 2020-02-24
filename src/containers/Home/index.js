@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 class Home extends Component {
-
   render(){
     return(
       <div>
@@ -10,8 +9,6 @@ class Home extends Component {
           This is Home page.
         </h2>
         <Link to='/posts'>Posts</Link>
-        <br />
-        <Link to='/login'>Login</Link>
       </div>
     );
   }

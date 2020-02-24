@@ -15,8 +15,8 @@ class Register extends Component {
     super(props);
     this.state = {
       name:'',
-      email_register:'',
-      password_register:'',
+      email:'',
+      password:'',
       password2:'',
     };
   }
@@ -27,14 +27,17 @@ class Register extends Component {
 
   onSubmitData = (event) => {
     event.preventDefault();
-    const { name, email_register, password_register, password2 } = this.state;
-    const postBody = {
-      name: name,
-      email: email_register,
-      password: password_register,
-      password2: password2
-    };
-    this.props.registerUser(postBody);    
+    // console.log(this.state);
+    
+    // const { name, email, password, password2 } = this.state;
+    // const postBody = {
+    //   name: name,
+    //   email: email_register,
+    //   password: password_register,
+    //   password2: password2
+    // };
+    // this.props.registerUser(postBody);    
+    this.props.registerUser(this.state);    
   }
 
   render(){
@@ -71,12 +74,12 @@ class Register extends Component {
           <p style={{color: "red"}}>
             { error ? error.data.email : null }
           </p>
-          <label htmlFor="email_register">Email Address*: </label>
+          <label htmlFor="email">Email Address*: </label>
           <input
               id="email_register"
               type="email"
-              name="email_register"
-              value={this.state.email_register}
+              name="email"
+              value={this.state.email}
               placeholder="you@example.com"
               onChange={this.onChange}
           />
@@ -84,18 +87,18 @@ class Register extends Component {
           <p style={{color: "red"}}>
             { error ? error.data.password : null }
           </p>
-          <label htmlFor="password_register">Password*: </label>
+          <label htmlFor="password">Password*: </label>
           <input
               id="password_register"
               type="password"
-              name="password_register"
+              name="password"
               onChange={this.onChange}
           />
           <br />
           <p style={{color: "red"}}>
             { error ? error.data.password2 : null }
           </p>
-          <label htmlFor="password2">Retype Password*: </label>
+          <label htmlFor="password">Retype Password*: </label>
           <input
               id="password2"
               type="password"
