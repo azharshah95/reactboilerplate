@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Input, Button, Form, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Input, Button, Form, Header, Message } from 'semantic-ui-react'
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import saga from './saga';
@@ -24,6 +24,7 @@ class Login extends Component {
   UNSAFE_componentWillMount() {
     const user = localStorage.getItem('user');
     if(user){
+      window.location.replace('/');
       this.setState({ user });
     }
   }
@@ -82,36 +83,33 @@ class Login extends Component {
           Login Below
         </Header>
         <Form error>
-          {
-            error ? <Message error content={error.data.email} /> : null
-          }
+          { error ? <Message size='mini' color='red' error content={error.data.email} /> : null }
           <Form.Field>
-            <label htmlFor="email">Email Address: </label>
             <Input
                 id="email_login"
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                placeholder="E-mail Address"
+                icon='mail'
+                iconPosition='left'
                 value={this.state.email}
                 onChange={this.onChange}
                 />
           </Form.Field>
-          {
-            error ? <Message error content={error.data.password} /> : null
-          }
+          { error ? <Message size='mini' color='red' error content={error.data.password} /> : null }
           <Form.Field>
-            <label htmlFor="password">Password: </label>
             <Input
                 id="password_login"
                 type="password"
                 name="password"
+                placeholder="Password"
+                icon='key'
+                iconPosition='left'
                 value={this.state.password}
                 onChange={this.onChange}
                 />
           </Form.Field>
-          {
-            loading ? <Button loading fluid>Login</Button> : <Button id="btn_login" onClick={this.onSubmitForm} fluid>Login</Button>
-          }
+          { loading ? <Button loading fluid content='Logging In'/> : <Button id="btn_login" onClick={this.onSubmitForm} fluid>Login</Button> }
         </Form>
       </div>
     );

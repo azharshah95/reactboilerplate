@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Divider } from 'semantic-ui-react'
 import Login from '../Login';
 import Register from '../Register';
 
@@ -8,7 +9,7 @@ class Auth extends Component {
     return(
       <div style={{marginTop: '50px'}}>
         <Login />
-        <hr />
+        <Divider />
         <Register />
       </div>
     );

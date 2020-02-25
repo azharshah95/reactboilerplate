@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Grid, Segment, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -42,22 +43,32 @@ class Posts extends Component {
     const postsArr = paginate(posts, currentPage, pageSize)
     return(
       <div>
-        <h2>
+        <Header as='h2'>
           This is Posts page.
-        </h2>
-        <Pagination
-          itemsCount={itemsCount}
-          pageSize={pageSize}
-          currentPage={this.state.currentPage}
-          onPageChange={this.handlePageChange}
-        />
-        {
-          postsArr.map((obj, index ) => {
-            return(
-              <li key={index}>{obj.title}</li>
-            )
-          })
-        }
+        </Header>
+        <div style={{marginBottom: '20px'}}>
+          <Pagination
+            itemsCount={itemsCount}
+            pageSize={pageSize}
+            currentPage={this.state.currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+        <Grid container columns={2} stackable>
+          {
+            postsArr.map((obj, index ) => {
+              return(
+                // <li key={index}>{obj.title}</li>
+                <Grid.Column key={index}>
+                  <Message>
+                    <Message.Header as='h5' attached='top' size='large'>{obj.title}</Message.Header>
+                    <p>{obj.body}</p>
+                  </Message>
+                </Grid.Column>
+              )
+            })
+          }
+        </Grid>
       </div>
     );
   }

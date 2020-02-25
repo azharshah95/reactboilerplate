@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Input, Button, Form, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -27,16 +28,6 @@ class Register extends Component {
 
   onSubmitData = (event) => {
     event.preventDefault();
-    // console.log(this.state);
-    
-    // const { name, email, password, password2 } = this.state;
-    // const postBody = {
-    //   name: name,
-    //   email: email_register,
-    //   password: password_register,
-    //   password2: password2
-    // };
-    // this.props.registerUser(postBody);    
     this.props.registerUser(this.state);    
   }
 
@@ -49,66 +40,72 @@ class Register extends Component {
     }
     if (registerUserData.name) {
       return(
-        <h3>User Registered Successfully</h3>
+        <Form success>
+          <Message
+            success
+            header='User Registration Successful'
+          />
+        </Form>
       )
     }
     return(
       <div>
-        <h2>
+        <Header>
           Register Below
-        </h2>
-        <form>
-          <p style={{color: "red"}}>
-            { error ? error.data.name : null }
-          </p>
-          <label htmlFor="name">Name*: </label>
-          <input
+        </Header>
+        <Form error>
+          { error ? <Message  size='mini' color='red' error content={error.data.name} /> : null }
+          <Form.Field>
+            <Input
               id="name"
               type="name"
               name="name"
+              icon='user circle'
+              iconPosition='left'
               value={this.state.name}
-              placeholder="example"
+              placeholder="Name"
               onChange={this.onChange}
-          />
-          <br />
-          <p style={{color: "red"}}>
-            { error ? error.data.email : null }
-          </p>
-          <label htmlFor="email">Email Address*: </label>
-          <input
+            />
+          </Form.Field>
+          { error ? <Message  size='mini' color='red' error content={error.data.email} /> : null }
+          <Form.Field>
+            <Input
               id="email_register"
               type="email"
               name="email"
+              icon='mail'
+              iconPosition='left'
               value={this.state.email}
-              placeholder="you@example.com"
+              placeholder="Email"
               onChange={this.onChange}
-          />
-          <br />
-          <p style={{color: "red"}}>
-            { error ? error.data.password : null }
-          </p>
-          <label htmlFor="password">Password*: </label>
-          <input
+            />
+          </Form.Field>
+          { error ? <Message  size='mini' color='red' error content={error.data.password} /> : null }
+          <Form.Field>
+            <Input
               id="password_register"
               type="password"
               name="password"
+              icon='key'
+              iconPosition='left'
+              placeholder="Password"
               onChange={this.onChange}
-          />
-          <br />
-          <p style={{color: "red"}}>
-            { error ? error.data.password2 : null }
-          </p>
-          <label htmlFor="password">Retype Password*: </label>
-          <input
+            />
+          </Form.Field>
+          { error ? <Message  size='mini' color='red' error content={error.data.password2} /> : null }
+          <Form.Field>
+            <Input
               id="password2"
               type="password"
               name="password2"
+              icon='key'
+              iconPosition='left'
+              placeholder="Re-type Password"
               onChange={this.onChange}
-          />
-          <br />
-          <br />
-          <button id="btn_register" onClick={this.onSubmitData}>Register</button>
-        </form>
+            />
+          </Form.Field>
+          { loading ? <Button loading fluid content='Registering' /> : <Button fluid id="btn_register" onClick={this.onSubmitData}>Register</Button> }
+        </Form>
       </div>
     );
   }

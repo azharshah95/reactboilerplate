@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, Container } from 'semantic-ui-react'
 import UserContext from '../../context/userContext'
 import UserAuth from '../UserAuth'
@@ -11,21 +12,20 @@ class NavBar extends Component {
 			<UserContext.Consumer>
 				{
 					userContext =>
-					// <div style={{backgroundColor:'grey'}}>
-						<Menu inverted fixed='top'>
-							<Container>
-								<Menu.Item as='a' header>
+					<Container>
+						<Menu inverted fixed='top' stackable>
+							<Link to='/'>
+								<Menu.Item header link>
 									NavBar
 								</Menu.Item>
-								<Menu.Menu position='right'>
-								<Fragment>
+							</Link>
+							<Menu.Menu position='right'>
+								<>
 									<UserAuth />
-								</Fragment>
-								</Menu.Menu>
-							</Container>
+								</>
+							</Menu.Menu>
 						</Menu>
-						
-					// </div>
+					</Container>
 				}
 			</UserContext.Consumer>
 		)

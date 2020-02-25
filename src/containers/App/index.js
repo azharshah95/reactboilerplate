@@ -22,14 +22,16 @@ class App extends Component {
       <UserContext.Provider value={this.state.appUser}>
           <div>
             <Router>
-              <NavBar/>
-              <Container>
-                <Switch>
-                  <Route exact path='/login' component={Auth} />
-                  <Route exact path='/posts' component={Posts} />
-                  <Route exact path='/' component={Home} />
-                </Switch>
-              </Container>
+              <div style={{ marginTop: '50px'}}>
+                <NavBar/>
+                <Container>
+                  <Switch>
+                    <Route exact path='/login' component={Auth} />
+                    <Route exact path='/posts' component={Posts} />
+                    <Route exact path='/' component={Home} />
+                  </Switch>
+                </Container>
+              </div>
             </Router>
           </div>
         </UserContext.Provider>
