@@ -1,1 +1,1 @@
-export const localBaseUrl = 'http://localhost:5000/api'
+export const API_BASE_URL = process.env.NODE_ENV === 'development' ? process.env.LOCAL_API_URL : process.env.LIVE_API_URL
