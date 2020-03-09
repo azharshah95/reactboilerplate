@@ -1,1 +1,1 @@
-export const API_BASE_URL = process.env.NODE_ENV === 'development' ? process.env.LOCAL_API_URL : process.env.LIVE_API_URL
+export const API_BASE_URL = process.env.REACT_APP_NODE_ENV === 'development' ? process.env.REACT_APP_LOCAL_API_URL : process.env.REACT_APP_LIVE_API_URL
