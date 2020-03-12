@@ -13,14 +13,13 @@ const create = () => {
   const getHeaders = () => {
     let token = Cookies.get('token');
     if (token) {
-      return (token);
+      return (`Bearer ${token}`);
     }
   }
   
   const getPosts = () => api.get('https://jsonplaceholder.typicode.com/posts');
   const registerUser = (bodyParams) => api.post('/users/register', bodyParams);
   const loginUser = (bodyParams) => api.post('/users/login', bodyParams);
-  // const loginCurrentUser = () => api.get('/users/current', { headers: getHeaders() });
   const loginCurrentUser = () => api.get('/users/current', {},{ headers: {Authorization: getHeaders()} });
 
   return {

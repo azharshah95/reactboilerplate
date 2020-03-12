@@ -1,20 +1,22 @@
-import React, { useContext, Fragment } from 'react'
+import React, { useState, useContext, Fragment } from 'react'
+import _ from 'lodash'
+import decode from 'jwt-decode'
+import Cookies from 'js-cookie'
 import { Link } from 'react-router-dom'
 import UserContext from '../../context/userContext'
 
 function UserAuth() {
 	const appUser = useContext(UserContext)
 
-	const onLogout = () => {
-console.log('here');
+const onLogout = () => {
 		localStorage.removeItem('user');  // remove user
-    document.cookie = `token=null`  // delete token
+		Cookies.remove('token')	// delete token
     window.location.replace('/');
 	}
 	return (
 		<Fragment>
 			{
-				appUser
+				appUser !== undefined
 				?
 				<>
 					<Link to='/profile'>

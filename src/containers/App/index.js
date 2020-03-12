@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
+import { parseToken } from '../../config/helpers'
 import Auth from '../Auth';
 import Posts from '../Posts';
+import Profile from '../Profile';
 import Home from '../Home';
 import NavBar from '../../components/NavBar';
 import UserContext from '../../context/userContext';
+import PrivateRoute from '../PrivateRoute'
 
 class App extends Component {
   state = {
-    appUser: {}
+    appUser: {},
   }
 
-  componentDidMount(){
-    const appUser = JSON.parse(localStorage.getItem('user'));
-    this.setState({ appUser })
-  }
-  
-  render(){  
+  render(){
+    const cookieToken = parseToken() && parseToken()
     return (
-      <UserContext.Provider value={this.state.appUser}>
+      <UserContext.Provider value={cookieToken}>
         <div>
           <Router>
             <NavBar/>
             <Switch>
               <Route exact path='/login' component={Auth} />
-              <Route exact path='/posts' component={Posts} />
+              <PrivateRoute path='/posts' component={Posts} />
+              <PrivateRoute path='/profile' component={Profile} />
               <Route exact path='/' component={Home} />
             </Switch>
           </Router>
@@ -34,4 +35,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

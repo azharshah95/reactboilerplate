@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter, Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,16 +12,15 @@ import { fetchLoginUser, fetchLoginCurrentUser } from '../Login/actions';
 import { makeSelectLoginCurrentUser, makeSelectLoginUser, makeSelectLoading, makeSelectError } from '../../containers/Login/selectors';
 
 class Login extends Component {
-
   constructor(props){
     super(props);
     this.state = {
       email: '',
       password: '',
-      user: ''
+      user: '',
     };
   }
-
+  
   UNSAFE_componentWillMount() {
     const user = localStorage.getItem('user');
     if(user){
@@ -40,30 +41,24 @@ class Login extends Component {
     if (this.props.loginUserData.success) {
       this.setCookie();
     }
-    if (this.props.loginCurrentUser.size !== 0) {
-      this.setLocalStorage();
-    }
-    if (this.props.loginUserData !== prevProps.loginUserData) {
-      this.getCurrentUser();
-    }
-  }
-
-  setLocalStorage = () => {
-    localStorage.setItem('user', JSON.stringify(this.props.loginCurrentUser));
   }
 
   setCookie = () => {
-    document.cookie = `token=${this.props.loginUserData.token}`;
+    Cookies.set('token',this.props.loginUserData.token)
   }
-
-  getCurrentUser = () => {
-    this.props.currentUser();
-  }
-
+  
   render(){
     const { error, loading, loginUserData, loginCurrentUser } = this.props;
-    if (loginCurrentUser.name || localStorage.getItem('user')) {
-      window.location.replace('/')
+
+    if (loginUserData.success || Cookies.get('token')) {
+      if (Cookies.get('token')) {
+        return(<Redirect to='/' />)
+      }
+      if(this.props.location.state !== undefined) {
+        if(loginUserData.success) {
+          window.location.replace(`${this.props.location.state.referer.pathname}`)
+        }
+      }
     }
     if (loading) {
       return(
@@ -137,8 +132,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'loginUser', reducer });
 const withSaga = injectSaga({ key: 'loginUser', saga });
 
-export default compose(
+export default withRouter(compose(
   withReducer,
   withSaga,
   withConnect
-)(Login);
+)(Login));
