@@ -1,0 +1,23 @@
+FROM alpine:latest
+
+# upgrade and update
+RUN apk update && apk upgrade
+
+# install bash shell
+RUN apk add bash
+RUN bash && echo bash installed
+
+# install nodejs and npm
+RUN apk add nodejs npm
+
+# create directory
+RUN cd usr
+RUN mkdir src && cd src
+RUN mkdir app && cd app
+RUN pwd
+
+WORKDIR /usr/src/app
+
+RUN apk add curl
+
+CMD [ "serve" ]

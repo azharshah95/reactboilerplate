@@ -1,0 +1,20 @@
+version: '2'
+services: 
+  client:
+    image: azharshah1995/react-app:dev
+    restart: always
+    container_name: react-app-dev
+    ports: 
+      - "3000:3000"
+    environment: 
+      - REACT_APP_NODE_ENV=development
+      - REACT_APP_LOCAL_API_URL=http://localhost:5000/api
+      - REACT_APP_LIVE_API_URL=https://murmuring-fjord-08521.herokuapp.com/api
+    # depends_on: 
+    #   - mongodb
+    #   - node-app-dev
+    # links: 
+      # - "node-app-dev"
+    # networks: 
+    #   - webappnetwork
+    
